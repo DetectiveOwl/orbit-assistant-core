@@ -1,0 +1,35 @@
+{
+ "nome": "pubblico",
+ "descrizione": "Dataset PUBBLICO e SINTETICO del benchmark della memoria: tutte le informazioni (persona, corsi, date, progetti) sono inventate. Stessa struttura e stesse tipologie di verifica del dataset privato, ma su un vault di esempio (cartella vault/). Serve a chi clona il repository per provare gli strumenti senza dati personali. Nota: la domanda sul piano della giornata dipende dalla data di oggi (il piano di esempio copre ottobre e inizio novembre 2026), quindi richiamo e precisione di quella riga possono variare.",
+ "vault": "vault",
+ "notaProva": "cervello/persona/interessi.md",
+ "cacheQuery": "cosa so di Meshnet e Nimbus?",
+ "query": [
+  ["fatto esplicito", "quando e il parziale di analisi?", ["scadenze/parziali.md"]],
+  ["fatto esplicito", "che computer ho?", ["cervello/vita/setup-tecnico.md"]],
+  ["preferenza", "come preferisco i formulari?", ["cervello/persona/stile-di-lavoro.md"]],
+  ["concetto correlato", "a che pagina della dispensa di geometria c e la matrice inversa?", ["corsi/Geometria/INDICE.md"]],
+  ["piu note", "cosa so di Meshnet e Nimbus?", ["cervello/vita/progetti.md", "cervello/vita/setup-tecnico.md"]],
+  ["piano giornata", "cosa devo fare oggi?", ["scadenze/piano-di-studio.md", "scadenze/parziali.md"]],
+  ["decisione precedente", "perche gli allenamenti si saltano prima di FAM?", ["cervello/vita/routine-settimanale.md", "scadenze/piano-di-studio.md"]],
+  ["contraddizione", "a che ora finiscono le lezioni il lunedi?", ["cervello/vita/routine-settimanale.md"]],
+  ["ambigua", "e il test?", []],
+  ["senza risposta", "qual e la mia ricetta preferita della carbonara?", []],
+  ["senza risposta parziale", "che sport faccio?", ["cervello/persona/interessi.md", "cervello/da-completare.md"]],
+  ["nome breve", "cosa devo sapere su FAM?", ["cervello/vita/universita.md", "scadenze/parziali.md"]]
+ ],
+ "domande": [
+  { "tipo": "fatto esplicito", "q": "quando e il parziale di analisi?", "attesa": "Mercoledi 4 novembre 2026 (Analisi Matematica 1, prof. Bianchi).", "fatti": [{ "source": "4 novembre", "flags": "" }] },
+  { "tipo": "fatto esplicito", "q": "che computer ho?", "attesa": "Un Laptop Aurora 15 (2024, Windows 11).", "fatti": [{ "source": "Laptop Aurora", "flags": "" }] },
+  { "tipo": "preferenza", "q": "come preferisco i formulari?", "attesa": "Colonna unica con ogni formula su una riga; niente due colonne ne riquadri colorati; titoli blu scuro (#1b3a6b), corpo Calibri 11pt.", "fatti": [{ "source": "[Cc]olonna unica", "flags": "" }, { "source": "Calibri", "flags": "" }] },
+  { "tipo": "concetto correlato", "q": "a che pagina della dispensa di geometria c e la matrice inversa?", "attesa": "G2, matrice inversa: pagine 15-18 della dispensa (21-24 del PDF); esercizi 2.10 e 2.11 a p. 18, soluzioni p. 60.", "fatti": [{ "source": "15-18", "flags": "" }] },
+  { "tipo": "piu note", "q": "cosa so di Meshnet e Nimbus?", "attesa": "foto-sorter gira su una VM Nimbus Cloud (piano gratuito) esposta con Meshnet Funnel; account Nimbus Cloud (prova gratuita, niente piani a pagamento) e Meshnet nel setup.", "fatti": [{ "source": "Meshnet", "flags": "" }, { "source": "Nimbus", "flags": "" }] },
+  { "tipo": "piano giornata", "q": "cosa devo fare oggi?", "attesa": "Dipende dalla data di oggi: il piano di esempio copre dal 12 ottobre al 6 novembre 2026. Se oggi e fuori dal piano, Orbit deve dirlo senza inventare. Lo stato del ripasso (A3, A4 e A5 da fare) deve comparire comunque.", "fatti": [{ "source": "Stato del ripasso", "flags": "" }] },
+  { "tipo": "decisione precedente", "q": "perche gli allenamenti si saltano prima di FAM?", "attesa": "Gli allenamenti si saltano solo nell'ultima settimana prima di FAM (2 e 4 novembre) per avere piu ore di studio (1h30 lunedi 2 e 4h30 mercoledi 4). La regola e scritta, la ragione e dedotta dal piano.", "fatti": [{ "source": "prima di FAM", "flags": "" }, { "source": "salti l'allenamento", "flags": "" }] },
+  { "tipo": "contraddizione", "q": "a che ora finiscono le lezioni il lunedi?", "attesa": "Le note non concordano: la tabella della routine dice 18:00, l'aggiornamento del 12 ottobre dice che gli orari cambiano e che nella settimana 12-18 le lezioni del lunedi finivano alle 13:15; la fonte giusta e il calendario. Una risposta corretta segnala il conflitto.", "fatti": [{ "source": "13:15", "flags": "" }, { "source": "18:00", "flags": "" }] },
+  { "tipo": "ambigua", "q": "e il test?", "attesa": "Richiesta di chiarimento (non si sa quale test).", "fatti": [] },
+  { "tipo": "senza risposta", "q": "qual e la mia ricetta preferita della carbonara?", "attesa": "Nel vault non c'e: Orbit deve dirlo senza inventare.", "fatti": [] },
+  { "tipo": "senza risposta parziale", "q": "che sport faccio?", "attesa": "Non e registrato quale sport: si sa solo che ci si allena lunedi, mercoledi e venerdi sera; la domanda e tra quelle da completare.", "fatti": [{ "source": "sport", "flags": "i" }] },
+  { "tipo": "nome breve", "q": "cosa devo sapere su FAM?", "attesa": "Parziale venerdi 6 novembre 2026; sigle A1-A5 con parte orale su alcune dimostrazioni; circa 60 h di studio; un solo fac simile non basta.", "fatti": [{ "source": "6 novembre", "flags": "" }, { "source": "A1-A5|orale", "flags": "" }] }
+ ]
+}

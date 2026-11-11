@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="it" data-tema="scuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Orbit</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/app.css">
+<link rel="stylesheet" href="/orbit-design.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="app-header" id="appHeader">
+    <a class="brand" href="/" aria-label="Orbit, pagina iniziale"><span class="brand-mark" aria-hidden="true"></span>orbit</a>
+    <!-- Tutte le azioni sempre visibili, nessun menu nascosto: a sinistra dove andare, a destra come ti ascolta Orbit -->
+    <nav class="barra" aria-label="Navigazione di Orbit">
+      <button type="button" class="voce-barra" id="mNuova"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Nuova chat</span></button>
+      <button type="button" class="voce-barra" id="mCronologia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.6 7M3 4v7h7M12 7v5l3 2"/></svg><span>Cronologia</span></button>
+      <button type="button" class="voce-barra" id="mDiagnostica"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><span>Diagnostica</span></button>
+    </nav>
+    <div class="header-actions">
+      <span class="today" id="oggiLabel"></span>
+      <div class="barra" role="group" aria-label="Ascolto e impostazioni">
+        <button type="button" class="voce-barra interruttore" id="mParola" aria-pressed="false" title="Ascolta la parola «Orbit»"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg><span class="voce-testo">Parola «Orbit»</span><span class="spia" aria-hidden="true"></span></button>
+        <button type="button" class="voce-barra" id="mPausa" aria-pressed="false" title="Metti Orbit in pausa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><span class="voce-testo">Pausa</span></button>
+        <button type="button" class="voce-barra solo-icona" id="mImpostazioni" aria-label="Impostazioni e integrazioni" title="Impostazioni e integrazioni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.6"/><circle cx="15" cy="17" r="2.6"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="avviso" id="avvisoConfig" role="alert" hidden></div>
+
+  <!-- Il pallino: unico elemento fisso dell'interfaccia -->
+  <main class="scena" id="scena">
+    <div class="welcome" id="welcome"><h1>Da dove cominciamo?</h1><p>Idee, studio e impegni. Mettiamo tutto a fuoco.</p></div>
+    <div class="orb" id="orb" data-stato="idle" data-aperta="0">
+      <canvas class="rete" id="rete" aria-hidden="true"></canvas>
+      <div class="corpo" id="corpo">
+        <button class="nucleo" id="nucleo" type="button" aria-label="Orbit. Tocca per scrivere" aria-expanded="false"><span id="nucleoSvg"></span></button>
+        <section class="risposta" id="risposta" aria-label="Risposta di Orbit" hidden>
+          <header class="risposta-testa">
+            <div class="risposta-nav" id="rispostaNav" hidden>
+              <button class="btn-neu icona piccolo" id="rPrec" aria-label="Risposta precedente" title="Risposta precedente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+              <span class="risposta-conta" id="rConta"></span>
+              <button class="btn-neu icona piccolo" id="rSucc" aria-label="Risposta successiva" title="Risposta successiva"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+            </div>
+            <button class="btn-neu icona piccolo" id="rChiudi" aria-label="Chiudi la risposta" title="Chiudi (Esc)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></button>
+          </header>
+          <div class="risposta-scorri" id="rScorri" tabindex="0">
+            <p class="risposta-domanda" id="rDomanda"></p>
+            <div class="risposta-testo" id="rTesto" aria-live="polite"></div>
+          </div>
+          <footer class="risposta-meta" id="rMeta"></footer>
+        </section>
+      </div>
+    </div>
+
+    <div class="etichette" id="etichette" aria-hidden="true"></div>
+    <p class="stato-testo" id="statoTesto" role="status" aria-live="polite"></p>
+    <p class="stato-dettaglio" id="statoDettaglio"></p>
+
+    <!-- Capsula di testo: compare dal pallino solo quando serve -->
+    <form class="capsula" id="capsula" autocomplete="off" hidden>
+      <button type="button" class="btn-neu icona" id="btnMic" aria-label="Detta a voce" title="Detta a voce" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      </button>
+      <textarea id="input" class="neu-incavo" rows="1" maxlength="8000" placeholder="Scrivi a Orbit" aria-label="Messaggio per Orbit"></textarea>
+      <button type="submit" class="btn-neu icona primario" id="btnInvia" aria-label="Invia" title="Invia (Invio)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7-7-1z" fill="currentColor"/></svg>
+      </button>
+    </form>
+    <div class="voice-footer" id="voiceFooter">
+      <div class="stato-azioni" id="statoAzioni" hidden>
+        <button type="button" class="btn-neu testo piccolo pericolo" id="btnInterrompi">Interrompi</button>
+      </div>
+      <p id="notaBozza" class="nota-bozza" role="status" aria-live="polite" hidden></p>
+      <details id="recuperoBozza" class="recupero-bozza neu-incavo" hidden><summary>Testi delle richieste</summary><p>Puoi selezionare e copiare il testo. Recuperarlo non lo invia e non sostituisce una nuova bozza.</p><div id="recuperiTesti"></div></details>
+      <p class="chip-stato" id="statoParola" role="status" aria-live="polite"></p>
+      <p class="suggerimento" id="suggerimentoVoce"></p>
+    </div>
+  </main>
+
+  <!-- Cronologia: pannello fluttuante, non una barra laterale permanente -->
+  <div class="velo" id="veloCronologia" hidden></div>
+  <aside class="cronologia" id="pannelloCronologia" role="dialog" aria-modal="true" aria-label="Cronologia delle conversazioni" hidden>
+    <div class="cronologia-testa">
+      <h2>Cronologia</h2>
+      <div class="gruppo">
+        <button class="btn-neu testo primario piccolo" id="btnNuova">Nuova</button>
+        <button class="btn-neu icona piccolo" id="btnChiudiCronologia" aria-label="Chiudi la cronologia" title="Chiudi (Esc)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></button>
+      </div>
+    </div>
+    <p class="panel-intro">Riprendi il filo delle tue idee.</p>
+    <label class="history-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="cercaConversazioni" type="search" placeholder="Cerca una conversazione" aria-label="Cerca una conversazione" autocomplete="off"></label>
+    <ul class="lista-conv" id="listaConv"></ul>
+    <p class="vuoto" id="cronologiaVuota" hidden>Le tue conversazioni cominciano qui.<br>Aprine una nuova e ritrovala quando vuoi.</p>
+  </aside>
+
+  <!-- Diagnostica AI: schermata a parte, fuori dall'esperienza ordinaria -->
+  <section class="diag-schermo" id="vistaDiagnostica" role="dialog" aria-modal="true" aria-labelledby="diagTitolo" hidden>
+    <div class="diag">
+      <div class="diag-testa"><div><p class="eyebrow">ATTIVITÀ E CONSUMI</p><h1 id="diagTitolo">Diagnostica AI</h1></div><div class="gruppo"><button type="button" class="btn-neu testo piccolo" id="diagAggiorna">Aggiorna</button><button class="btn-neu icona piccolo" id="dChiudi" aria-label="Chiudi la diagnostica" title="Chiudi (Esc)">×</button></div></div>
+      <p id="diagStato" class="diag-nota" role="status" aria-live="polite"></p>
+      <section class="diag-benchmark" aria-labelledby="diagBenchmarkTitolo">
+        <div><p class="eyebrow" id="diagBenchmarkTitolo">BENCHMARK API · TOTALE STORICO</p><p class="diag-costo" id="diagCostoStorico">Non disponibile</p><p id="diagPeriodo" class="diag-nota">Tutte le chiamate conservate da Orbit.</p><p id="diagCopertura" class="diag-copertura"></p></div>
+        <div class="diag-benchmark-secondario"><div><span>Equivalente API oggi</span><strong id="diagCostoOggi">Non disponibile</strong></div><div><span>Chiamate nello storico</span><strong id="diagChiamateStoriche">Non disponibile</strong></div></div>
+        <p class="diag-benchmark-nota">È l’equivalente a listino API comunicato da Claude Code, non denaro addebitato. Include risposte, verifiche e prove dei modelli. Il totale non riparte a mezzanotte o al riavvio: segue lo storico del database. Non è un preventivo preciso di una futura fattura API.</p>
+      </section>
+      <section aria-labelledby="diagAttivitaTitolo"><h2 id="diagAttivitaTitolo">Attività recente</h2><div class="diag-schede" id="diagSchede"></div></section>
+      <section aria-labelledby="diagRecentiTitolo">
+        <h2 id="diagRecentiTitolo">Ultime richieste</h2><p class="diag-nota">Apri la data di una richiesta per vedere controlli, modelli e chiamate. L’elenco mostra le ultime 50 richieste; il benchmark usa tutto lo storico.</p>
+        <div id="diagDettaglio" class="diag-selezione" tabindex="-1" hidden></div>
+        <div class="tabella-box neu-incavo"><table class="tabella" id="diagTabella"><thead><tr><th>Quando</th><th>Attività</th><th>Modello iniziale</th><th>Esito</th><th>Tempo</th><th>Equivalente API</th></tr></thead><tbody></tbody></table></div>
+      </section>
+      <details class="diag-sezione"><summary>Modelli e utilizzo negli ultimi 7 giorni</summary><div id="diagModelli" class="diag-box"></div></details>
+      <details class="diag-sezione"><summary>Registro delle operazioni</summary><p class="diag-nota">Strumenti, conferme e permessi. Solo metadati: nessun contenuto di email, documenti o note.</p><div class="tabella-box neu-incavo"><table class="tabella" id="auditTabella"><thead><tr><th>Quando</th><th>Integrazione</th><th>Azione</th><th>Livello</th><th>Esito</th><th>Dettaglio</th></tr></thead><tbody></tbody></table></div></details>
+    </div>
+  </section>
+
+  <dialog class="impostazioni" id="dlgImpostazioni" aria-labelledby="titoloImpostazioni">
+    <form method="dialog" class="imp-corpo">
+      <div class="imp-testa"><div><p class="eyebrow">IL TUO ORBIT</p><h2 id="titoloImpostazioni">Fallo tuo.</h2></div><button class="btn-neu icona piccolo" value="chiudi" aria-label="Chiudi">×</button></div>
+      <div class="settings-tabs" role="tablist" aria-label="Sezioni delle impostazioni">
+        <button type="button" role="tab" id="tabAspetto" aria-controls="panelAspetto" aria-selected="true" data-settings-tab="aspetto">Aspetto</button>
+        <button type="button" role="tab" id="tabVoce" aria-controls="panelVoce" aria-selected="false" tabindex="-1" data-settings-tab="voce">Voce</button>
+        <button type="button" role="tab" id="tabConnessioni" aria-controls="panelConnessioni" aria-selected="false" tabindex="-1" data-settings-tab="connessioni">Connessioni</button>
+        <button type="button" role="tab" id="tabSistema" aria-controls="panelSistema" aria-selected="false" tabindex="-1" data-settings-tab="sistema">Sistema</button>
+      </div>
+      <div role="tabpanel" id="panelAspetto" aria-labelledby="tabAspetto" data-settings-panel="aspetto" tabindex="0">
+      <fieldset><legend>La luce giusta</legend>
+        <div class="gruppo" role="group" aria-label="Tema">
+          <button type="button" class="btn-neu testo piccolo" data-tema="auto" aria-pressed="false">Automatico</button>
+          <button type="button" class="btn-neu testo piccolo" data-tema="chiaro" aria-pressed="false">Chiaro</button>
+          <button type="button" class="btn-neu testo piccolo" data-tema="scuro" aria-pressed="false">Scuro</button>
+        </div>
+        <label class="campo">Movimento del nucleo
+          <select id="selMovimento" class="neu-incavo"><option value="auto">Come Windows (effetti di animazione)</option><option value="completo">Sempre fluido</option><option value="ridotto">Ridotto (immagini ferme)</option></select>
+        </label>
+      </fieldset>
+      </div>
+      <div role="tabpanel" id="panelVoce" aria-labelledby="tabVoce" data-settings-panel="voce" tabindex="0" hidden>
+      <fieldset><legend>Come parliamo</legend>
+        <div class="gruppo" role="group" aria-label="Modalita di interazione">
+          <button type="button" class="btn-neu testo piccolo" data-modalita="testo" aria-pressed="false">Testo</button>
+          <button type="button" class="btn-neu testo piccolo" data-modalita="voce" aria-pressed="false">Voce</button>
+          <button type="button" class="btn-neu testo piccolo" data-modalita="mista" aria-pressed="false">Mista</button>
+        </div>
+        <p class="nota">Testo: scrivi e leggi. Voce: il pallino ascolta al tocco e ti risponde a voce. Mista: scrivi o detti, e ti risponde a voce solo se hai dettato.</p>
+        <div class="gruppo">
+          <button type="button" class="btn-neu testo piccolo" id="btnVoceOnOff" aria-pressed="true">Risposta vocale: on</button>
+          <button type="button" class="btn-neu testo piccolo" id="btnVoceStop" disabled>Ferma la voce</button>
+        </div>
+      </fieldset>
+      <fieldset><legend>Voce</legend>
+        <label class="campo">Voce italiana della sintesi
+          <select id="selVoce" class="neu-incavo"></select>
+        </label>
+        <label class="campo">Velocita di lettura
+          <select id="selVelocita" class="neu-incavo"><option value="0.9">Lenta</option><option value="1">Normale</option><option value="1.2">Veloce</option><option value="1.4">Molto veloce</option><option value="1.5">1,5x</option></select>
+        </label>
+        <div class="gruppo"><button type="button" class="btn-neu testo piccolo" id="btnProvaVoce">Prova la voce</button></div>
+        <p class="nota" id="notaVoci"></p>
+        <p class="nota" id="notaRiconoscimento">Controllo del motore di riconoscimento in corso...</p>
+      </fieldset>
+      </div>
+      <div role="tabpanel" id="panelSistema" aria-labelledby="tabSistema" data-settings-panel="sistema" tabindex="0" hidden>
+      <fieldset><legend>Stato di Orbit</legend>
+        <div id="impStato" class="imp-stato"></div>
+        <div class="gruppo">
+          <button type="button" class="btn-neu testo piccolo" id="btnAggiornaModelli">Ricontrolla lo stato</button>
+          <button type="button" class="btn-neu testo piccolo" id="btnProvaModelli" title="Una chiamata minima per ciascun modello: consuma un po' dei limiti dell'abbonamento">Prova i modelli (3 chiamate)</button>
+        </div>
+        <p class="nota" id="notaProva"></p>
+      </fieldset>
+      </div>
+      <div role="tabpanel" id="panelConnessioni" aria-labelledby="tabConnessioni" data-settings-panel="connessioni" tabindex="0" hidden>
+      <fieldset><legend>I tuoi strumenti, insieme</legend>
+        <div id="impIntegrazioni" class="imp-stato">Controllo in corso...</div>
+        <p class="nota">Ogni integrazione si attiva e si disattiva da sola. Lettura e bozze sono consentite; creare chiede conferma salvo tua scelta; modificare, spostare, eliminare e inviare chiedono SEMPRE conferma, valida per una sola operazione. Il modello non puo cambiare queste impostazioni.</p>
+      </fieldset>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Conferma coerente con il design: usata per le operazioni delicate -->
+  <dialog class="conferma" id="dlgConferma" aria-labelledby="confTitolo" aria-describedby="confTesto">
+    <form method="dialog" class="imp-corpo">
+      <h2 id="confTitolo" class="conf-titolo"></h2>
+      <p id="confTesto" class="conf-testo"></p>
+      <div class="gruppo conf-azioni">
+        <button class="btn-neu testo" value="no" id="confNo">Annulla</button>
+        <button class="btn-neu testo primario" value="si" id="confSi">Conferma</button>
+      </div>
+    </form>
+  </dialog>
+</div>
+
+<script src="/core-state.js"></script>
+<script src="/markdown.js"></script>
+<script src="/orbit-motion.js"></script>
+<script src="/voice.js"></script>
+<script src="/performance.js"></script>
+<script type="module" src="/orbit-core.js"></script>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

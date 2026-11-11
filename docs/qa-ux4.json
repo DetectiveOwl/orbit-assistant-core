@@ -1,0 +1,198 @@
+[
+  {
+    "overflow": false,
+    "rects": [
+      {
+        "height": 62,
+        "id": "capsula",
+        "width": 650,
+        "x": 229.5,
+        "y": 501
+      },
+      {
+        "height": 36,
+        "id": "btnInterrompi",
+        "width": 86.671875,
+        "x": 511.15625,
+        "y": 583
+      },
+      {
+        "height": 18,
+        "id": "notaBozza",
+        "width": 572.90625,
+        "x": 268.046875,
+        "y": 626
+      },
+      {
+        "height": 44,
+        "id": "recuperoBozza",
+        "width": 650,
+        "x": 229.5,
+        "y": 651
+      }
+    ],
+    "viewport": {
+      "height": 719,
+      "width": 1109
+    }
+  },
+  {
+    "overflow": false,
+    "rects": [
+      {
+        "height": 62,
+        "id": "capsula",
+        "width": 348,
+        "x": 21,
+        "y": 608
+      },
+      {
+        "height": 36,
+        "id": "btnInterrompi",
+        "width": 86.671875,
+        "x": 151.65625,
+        "y": 690
+      },
+      {
+        "height": 36,
+        "id": "notaBozza",
+        "width": 342,
+        "x": 24,
+        "y": 733
+      },
+      {
+        "height": 44,
+        "id": "recuperoBozza",
+        "width": 342,
+        "x": 24,
+        "y": 776
+      }
+    ],
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "overflow": false,
+    "rects": [
+      {
+        "height": 62,
+        "id": "capsula",
+        "width": 650,
+        "x": 59,
+        "y": 806
+      },
+      {
+        "height": 36,
+        "id": "btnInterrompi",
+        "width": 86.671875,
+        "x": 340.65625,
+        "y": 888
+      },
+      {
+        "height": 18,
+        "id": "notaBozza",
+        "width": 572.90625,
+        "x": 97.546875,
+        "y": 931
+      },
+      {
+        "height": 44,
+        "id": "recuperoBozza",
+        "width": 650,
+        "x": 59,
+        "y": 956
+      }
+    ],
+    "viewport": {
+      "height": 1024,
+      "width": 768
+    }
+  },
+  {
+    "background": "rgb(115, 81, 181)",
+    "color": "rgb(255, 255, 255)",
+    "composer": "color(srgb 0.113961 0.148784 0.162667)",
+    "focused": "btnInvia",
+    "outline": "rgb(231, 238, 232)",
+    "outlineWidth": "2px",
+    "tema": "scuro",
+    "glyphContrast": 5.877120179560678,
+    "focusContrast": 13.067706084490727
+  },
+  {
+    "background": "rgb(115, 81, 181)",
+    "color": "rgb(255, 255, 255)",
+    "composer": "color(srgb 0.980235 0.970824 0.995765)",
+    "focused": "btnInvia",
+    "outline": "rgb(24, 49, 44)",
+    "outlineWidth": "2px",
+    "tema": "chiaro",
+    "glyphContrast": 5.877120179560678,
+    "focusContrast": 13.117160593559893
+  },
+  {
+    "composerBottom": 558,
+    "draft": "Bozza successiva conservata",
+    "footerTop": 578,
+    "original": "Richiesta di prova",
+    "overflow": false,
+    "scenario": "recupero aperto dopo interruzione",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "overflow": false,
+    "rects": [
+      {
+        "height": 62,
+        "id": "capsula",
+        "width": 526,
+        "x": 21,
+        "y": 145
+      },
+      {
+        "height": 69,
+        "id": "voiceFooter",
+        "width": 520,
+        "x": 24,
+        "y": 227
+      },
+      {
+        "height": 160,
+        "id": "risposta",
+        "width": 520,
+        "x": 24,
+        "y": 80
+      },
+      {
+        "height": 38.75,
+        "id": "appHeader",
+        "width": 467,
+        "x": 27,
+        "y": 28
+      }
+    ],
+    "scenario": "finestra bassa, recupero chiuso",
+    "viewport": {
+      "height": 320,
+      "width": 568
+    }
+  },
+  {
+    "composerBottom": 139,
+    "composerTop": 77,
+    "footerTop": 159,
+    "scenario": "finestra bassa, recupero aperto",
+    "viewportHeight": 320
+  },
+  {
+    "background": "rgb(115, 81, 181)",
+    "color": "rgb(255, 255, 255)",
+    "tema": "auto",
+    "glyphContrast": 5.877120179560678
+  }
+]

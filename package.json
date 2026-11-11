@@ -1,0 +1,14 @@
+{
+  "name": "orbit-hud",
+  "license": "MIT",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Orbit: assistente personale con orchestrazione AI su Claude Code (abbonamento, senza API), memoria in sola lettura sul vault Obsidian. Nessuna dipendenza: non serve npm install.",
+  "engines": { "node": ">=22.5" },
+  "scripts": {
+    "start": "node orbit/server.js",
+    "test": "node --test \"orbit/tests/*.test.js\"",
+    "check": "node orbit/tools/check.js",
+    "verifica": "node orbit/tools/check.js && node --test \"orbit/tests/*.test.js\""
+  }
+}

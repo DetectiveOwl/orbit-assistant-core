@@ -1,0 +1,76 @@
+# Segreti e dati locali: non vanno mai in un repository
+.env
+.env.*
+!.env.example
+orbit/.env
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+node_modules/
+*.log
+
+# Credenziali Google: vivono in %LOCALAPPDATA%\Orbit\google, mai in un repository
+credentials.json
+client_secret*.json
+client.json
+*.token
+token*.json
+
+# --- Dati privati dell'utente: restano sul PC, mai nel repository ---
+# privato/ contiene documenti di lavoro, benchmark originali e il profilo locale (privato/orbit.env)
+/privato/
+privato/
+
+# --- Modelli e binari pesanti (si scaricano con orbit/tools/installa-stt.js e installa-voce.js) ---
+*.bin
+*.onnx
+*.gguf
+*.ggml
+*.traineddata
+*.zip
+*.7z
+*.tar.gz
+/stt/
+/tts/
+/tessdata/
+/ollama/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pid
+
+# --- Credenziali e chiavi (oltre a quelle sopra) ---
+*.dpapi
+*.pem
+*.key
+*.pfx
+*.p12
+
+# --- Database, conversazioni, audio e log generati a runtime ---
+*.db
+*.db-wal
+*.db-shm
+*.wav
+*.webm
+cc-cwd/
+outputs/
+
+# --- Risultati dei benchmark e delle validazioni (possono contenere frammenti del vault) ---
+/bench-*.json
+/valida*.json
+/risultati/
+
+# --- File temporanei, backup, editor, sistema ---
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+.claude/settings.local.json
+/REPORT-*.md

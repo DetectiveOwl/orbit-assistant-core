@@ -1,0 +1,18 @@
+# Fine riga coerenti tra Windows e altri sistemi: Git normalizza a LF nel repository.
+* text=auto
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.js text
+*.py text
+*.md text
+*.json text
+*.html text
+*.css text
+*.svg text
+# Binari: niente conversione
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+orbit/public/vendor/*.min.js -text
