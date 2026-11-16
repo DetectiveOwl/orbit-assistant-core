@@ -17,7 +17,7 @@ const ROOT_ID = '00000001:0000000000000001';
 
 // note: { 'to sort/A.md': testo, 'liste/B.md': testo }; cartelle: cartelle vuote in piu.
 function fixture({ note, cartelle = [], ambito: extra = {} }) {
-  const stage = path.join(fs.realpathSync(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
+  const stage = path.join(fs.realpathSync.native(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
   creati.push(stage);
   const root = path.join(stage, 'data/v');
   for (const d of ['home', 'tmp', 'technical/v', 'data/v/to sort', 'data/v/liste', ...cartelle.map(c => 'data/v/' + c)]) fs.mkdirSync(path.join(stage, d), { recursive: true });
