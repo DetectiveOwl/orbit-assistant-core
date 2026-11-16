@@ -1,5 +1,6 @@
 'use strict';
 // Strumenti comuni dei test: provider finto programmabile, settings di prova, app in memoria.
+const path = require('path');
 const config = require('../config');
 const { creaApp } = require('../app');
 const { Storage } = require('../storage/db');
@@ -45,13 +46,16 @@ class MockProvider {
   conteggio(ruolo) { return this.chiamate.filter(c => c.ruolo === ruolo).length; }
 }
 
+// File .env che non esiste, in un percorso valido su ogni sistema operativo (fuori da qualunque vault).
+const ENV_INESISTENTE = path.join(require('os').tmpdir(), 'orbit-test-inesistente', '.env');
+
 function settingsProva(extra = {}) {
   const { settings } = config.carica({
     envProcesso: Object.assign({
-      ORBIT_AI_VERIFY: 'sempre', ORBIT_ENV_FILE: 'C:\\inesistente\\.env', ORBIT_DATA_DIR: require('os').tmpdir() + '\\orbit-test-dati',
+      ORBIT_AI_VERIFY: 'sempre', ORBIT_ENV_FILE: ENV_INESISTENTE, ORBIT_DATA_DIR: path.join(require('os').tmpdir(), 'orbit-test-dati'),
       ORBIT_MODEL_HAIKU: 'mock-haiku-1', ORBIT_MODEL_SONNET: 'mock-sonnet-1', ORBIT_MODEL_OPUS: 'mock-opus-1'
     }, extra.env || {}),
-    envFile: 'C:\\inesistente\\.env'
+    envFile: ENV_INESISTENTE
   });
   if (extra.limiti) Object.assign(settings.limiti, extra.limiti);
   if (extra.settings) Object.assign(settings, extra.settings);

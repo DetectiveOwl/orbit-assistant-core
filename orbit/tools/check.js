@@ -38,7 +38,7 @@ const REGOLE = [
   { re: /x-api-key|api\.anthropic\.com|anthropic-version|\/v1\/messages|new Anthropic\(|@anthropic-ai\/sdk|claude-agent-sdk/i, msg: 'codice o riferimento all API a pagamento (Orbit usa solo claude -p con l abbonamento)', salta: f => ['tools/check.js', 'log.js'].includes(f) || f.startsWith('tests/') },
   { re: /['"]--bare['"]/, msg: 'uso di --bare (richiede una chiave API)', salta: f => ['tools/check.js'].includes(f) || f.startsWith('tests/') },
   { re: /\bdebugger\b/, msg: 'debugger', salta: f => f.includes('check.js') },
-  { re: /writeFileSync|appendFileSync|unlinkSync|rmSync|renameSync/, msg: 'scrittura su file: nel codice di Orbit solo storage/db.js e config (mai sul vault)', salta: f => f.startsWith('tests/') || ['tools/check.js', 'tools/installa-voce.js', 'voice/piper.js', 'integrations/obsidian/scrittura.js', 'integrations/documenti/lettori.js', 'integrations/google/oauth.js', 'tools/bench-memoria.js', 'tools/validazione-memoria.js', 'voice/whisper.js', 'tools/installa-stt.js', 'tools/prova-stt.js', 'tools/prova-elevenlabs.js'].includes(f) }
+  { re: /writeFileSync|appendFileSync|unlinkSync|rmSync|renameSync/, msg: 'scrittura su file: nel codice di Orbit solo storage/db.js e config (mai sul vault)', salta: f => f.startsWith('tests/') || ['tools/check.js', 'tools/installa-voce.js', 'voice/piper.js', 'integrations/obsidian/scrittura.js', 'integrations/documenti/lettori.js', 'integrations/google/oauth.js', 'tools/bench-memoria.js', 'tools/validazione-memoria.js', 'voice/whisper.js', 'voice/voce-locale.js', 'tools/installa-stt.js', 'tools/prova-stt.js', 'tools/prova-elevenlabs.js'].includes(f) }
 ];
 for (const f of tutti.filter(x => /\.(js|html|css|md)$/.test(x) || x.endsWith('.env.example'))) {
   const r = rel(f);
