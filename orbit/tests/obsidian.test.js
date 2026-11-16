@@ -159,3 +159,13 @@ test('vault: la cartella dei dati non puo stare dentro il vault', () => {
   try { assert.throws(() => new Vault({ vaultPath: a.vault, datiDir: path.join(a.vault, 'dati') }), /dentro il vault/); } finally { a.pulisci(); }
 });
 
+test('vault: la cartella dei dati raggiunta tramite un link non puo stare dentro il vault', (t) => {
+  const a = ambiente();
+  try {
+    fs.mkdirSync(path.join(a.vault, 'dati'));
+    const link = path.join(a.fuori, 'dati-link');
+    try { fs.symlinkSync(path.join(a.vault, 'dati'), link, 'junction'); } catch (e) { return t.skip('collegamenti non consentiti su questo sistema'); }
+    assert.throws(() => new Vault({ vaultPath: a.vault, datiDir: link }), /dentro il vault/);
+  } finally { a.pulisci(); }
+});
+
