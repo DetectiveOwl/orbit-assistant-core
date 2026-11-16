@@ -4,6 +4,7 @@
 
 **A local AI assistant for Windows that answers from your own Obsidian notes, picks the cheapest Claude model able to handle each request, and verifies every answer before showing it. Built with Node.js (no npm dependencies), SQLite and Three.js on top of Claude Code.**
 
+[![CI](https://github.com/DetectiveOwl/orbit-assistant-core/actions/workflows/ci.yml/badge.svg?branch=main)](../../actions/workflows/ci.yml)
 ![Platform: Windows 11](https://img.shields.io/badge/platform-Windows%2011-0078D4?logo=windows&logoColor=white)
 ![Node.js 22.5 or newer](https://img.shields.io/badge/node-%E2%89%A5%2022.5-339933?logo=node.js&logoColor=white)
 ![Language: JavaScript](https://img.shields.io/badge/language-JavaScript-F7DF1E?logo=javascript&logoColor=black)
