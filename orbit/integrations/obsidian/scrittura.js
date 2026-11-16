@@ -61,6 +61,19 @@ function segmentiNota(rel) {
   return out;
 }
 
+// Percorso reale di un percorso che puo non esistere ancora: si risolve l'antenato esistente piu vicino e si riaccodano i segmenti mancanti.
+function realeAntenato(p) {
+  const mancanti = [];
+  let corrente = path.resolve(p);
+  for (;;) {
+    try { return path.join(fs.realpathSync.native(corrente), ...mancanti.reverse()); } catch (e) {
+      const padre = path.dirname(corrente);
+      if (e.code !== 'ENOENT' || padre === corrente) return path.resolve(p);
+      mancanti.push(path.basename(corrente)); corrente = padre;
+    }
+  }
+}
+
 function dentro(figlio, padre) { const f = confronta(path.resolve(figlio)), p = confronta(path.resolve(padre)); return f === p || f.startsWith(p.endsWith(path.sep) ? p : p + path.sep); }
 
 class Vault {
@@ -68,7 +81,8 @@ class Vault {
     if (!vaultPath || !datiDir) throw new Error('Vault o cartella dati mancanti.');
     this.vault = fs.realpathSync.native(path.resolve(vaultPath));
     this.datiDir = path.resolve(datiDir);
-    if (dentro(this.datiDir, this.vault)) throw new Error('La cartella dei dati di Orbit non puo stare dentro il vault.');
+    // Anche la cartella dei dati si confronta sul percorso reale (nomi corti 8.3, link, junction), come il vault.
+    if (dentro(this.datiDir, this.vault) || dentro(realeAntenato(this.datiDir), this.vault)) throw new Error('La cartella dei dati di Orbit non puo stare dentro il vault.');
     this.backupDir = path.join(this.datiDir, 'backup'); this.cestinoDir = path.join(this.datiDir, 'cestino');
     this.ora = orologio;
   }
