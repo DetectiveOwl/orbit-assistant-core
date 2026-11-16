@@ -117,7 +117,7 @@ The main suite (`npm test`) runs 788 test cases across 60 files with the built-i
 
 `smart-inbox/tests/` holds unit tests plus end-to-end scripts that need Windows and PowerShell 7 and are not part of `npm test`. `orbit/tools/check.js` encodes architecture rules as static checks: syntax of every file, no `eval`, no direct `console` use, `child_process` and file writes only in an allowlist of modules, a read-only memory module (outside its index code), and no reference to the metered API.
 
-There is no CI yet. The suite is run by hand on Windows 11, and many fixtures assume Windows paths, so it does not pass on a Linux runner as it stands. Real Google accounts and real microphones are not covered by automated tests, and checks against the real Claude Code were done manually.
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs `npm run verifica`, the static checks followed by the suite, on a `windows-latest` runner for every pull request and every push to `main`. The suite targets Windows: Smart Inbox and several fixtures rely on Windows path semantics, so it is not expected to pass on Linux. One test, `vault: la cartella dei dati non puo stare dentro il vault`, currently fails on the runner because the data folder is compared without resolving Windows short path names. Real Google accounts and real microphones are not covered by automated tests, and checks against the real Claude Code were done manually.
 
 ## Tech stack
 
@@ -226,7 +226,7 @@ node orbit/tools/bench-memoria.js --dataset pubblico
 
 ## Roadmap
 
-1. **CI and portable tests.** Replace the Windows-specific fixture paths, then run the suite and the static checks on a `windows-latest` runner and add a CI badge.
+1. **Green CI and Linux support.** Fix the data-folder check described above, add a CI badge, then port the Windows-only pieces (DPAPI token encryption, the Smart Inbox engine) behind an interface so the suite can also run on Linux.
 2. **Semantic retrieval.** Register a hybrid engine next to FTS5 through `registraMotore` and measure it against the benchmark dataset before adopting it.
 3. **Token streaming.** The quality gate runs before anything is shown, so answers appear whole. Streaming the draft with a visible "verifying" state would cut perceived latency.
 4. **Persistent web search.** Handle multi-message tool turns in the warm-worker protocol so web requests can leave the slower classic path.

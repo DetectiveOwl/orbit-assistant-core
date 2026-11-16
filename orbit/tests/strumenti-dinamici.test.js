@@ -93,13 +93,17 @@ for (const [i, c] of ATTESI.entries()) {
 // (62 giorni) letto per intero, restituendo solo i giorni trovati nel risultato del web.
 test('richiesta mista: prima il web, poi il calendario solo nei giorni trovati, su tutto l\'intervallo consentito (62 giorni)', async () => {
   const a = ambiente();
-  await a.chiedi('Che impegni ho nei giorni in cui giocano i Celtics?');
-  assert.deepEqual(a.chiamate.map(c => c.nome), ['web.cerca_web', 'google.elenca_eventi']);
-  const cal = a.chiamate.find(c => c.nome === 'google.elenca_eventi');
-  assert.equal((Date.parse(cal.params.a) - Date.parse(cal.params.da)) / 86400000, 61);
-  assert.ok(cal.params.giorni.includes('2026-10-21') || cal.params.giorni.includes('2027-10-21'));
-  assert.ok(cal.params.giorni.every(g => g >= cal.params.da && g <= cal.params.a));
-  assert.match(a.prompt(), /Calendario: 21 ottobre a Miami/); assert.match(a.prompt(), /Ripetizioni/);
+  // Il test dipende dalla data: con l'orologio fissato al periodo in cui e stato scritto non scade mai.
+  test.mock.timers.enable({ apis: ['Date'], now: new Date('2026-10-12T10:00:00Z') });
+  try {
+    await a.chiedi('Che impegni ho nei giorni in cui giocano i Celtics?');
+    assert.deepEqual(a.chiamate.map(c => c.nome), ['web.cerca_web', 'google.elenca_eventi']);
+    const cal = a.chiamate.find(c => c.nome === 'google.elenca_eventi');
+    assert.equal((Date.parse(cal.params.a) - Date.parse(cal.params.da)) / 86400000, 61);
+    assert.ok(cal.params.giorni.includes('2026-10-21') || cal.params.giorni.includes('2027-10-21'));
+    assert.ok(cal.params.giorni.every(g => g >= cal.params.da && g <= cal.params.a));
+    assert.match(a.prompt(), /Calendario: 21 ottobre a Miami/); assert.match(a.prompt(), /Ripetizioni/);
+  } finally { test.mock.timers.reset(); }
 });
 
 // ---------- 2. linguaggio naturale e frasi imperfette della dettatura ----------
