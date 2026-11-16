@@ -12,7 +12,7 @@ const ROOT_ID = '00000001:0000000000000001';
 const creati = [];
 test.after(() => { for (const p of creati) fs.rmSync(p, { recursive: true, force: true }); });
 function fixture(target) {
-  const stage = path.join(fs.realpathSync(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
+  const stage = path.join(fs.realpathSync.native(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
   creati.push(stage);
   const context = { stage, vault: 'data/v', technical: 'technical/v' }, root = path.join(stage, context.vault);
   for (const d of ['to sort', 'liste']) fs.mkdirSync(path.join(root, d), { recursive: true });

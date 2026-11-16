@@ -14,7 +14,7 @@ const { sha } = require('../../smart-inbox/policy');
 const creati = [];
 test.after(() => { for (const p of creati) fs.rmSync(p, { recursive: true, force: true }); });
 const nuovo = (marker = true) => {
-  const stage = path.join(fs.realpathSync(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
+  const stage = path.join(fs.realpathSync.native(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
   creati.push(stage);
   for (const d of ['home', 'tmp', 'data/v/to sort', 'data/v/liste', 'technical/v']) fs.mkdirSync(path.join(stage, d), { recursive: true });
   if (marker) scriviMarker(stage);
@@ -106,7 +106,7 @@ test('junction/collegamento: lo stage o le sue cartelle che puntano altrove sono
   fs.rmSync(path.join(base.stage, 'data/v'), { recursive: true });
   fs.symlinkSync(path.join(fuori.stage, 'data/v'), path.join(base.stage, 'data/v'), 'junction');
   rifiuta(() => verificaPerimetroFs(base.ambito.context), 'PERIMETRO_NON_REALE');
-  const link = path.join(fs.realpathSync(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
+  const link = path.join(fs.realpathSync.native(os.tmpdir()), 'orbit-smart-inbox-ts3-' + crypto.randomBytes(16).toString('hex'));
   creati.push(link);
   fs.symlinkSync(fuori.stage, link, 'junction');
   rifiuta(() => verificaPerimetroFs({ ...fuori.ambito.context, stage: link }), 'PERIMETRO_NON_REALE');
@@ -121,7 +121,7 @@ test('scriviMarker: solo su stage sintetico esistente e mai sovrascrivendo', () 
   const { stage } = nuovo(false);
   scriviMarker(stage);
   assert.throws(() => scriviMarker(stage), { code: 'EEXIST' });
-  rifiuta(() => scriviMarker(path.join(fs.realpathSync(os.tmpdir()), 'qualunque')), 'STAGING_SINTETICO_RICHIESTO');
+  rifiuta(() => scriviMarker(path.join(fs.realpathSync.native(os.tmpdir()), 'qualunque')), 'STAGING_SINTETICO_RICHIESTO');
 });
 
 test('integrazione: scope non valido = errore (Orbit lo spegne); prerequisiti riflettono il disco', async () => {
@@ -155,7 +155,7 @@ test('il percorso reale del vault non compare nel codice di Smart Inbox', () => 
 
 // Tipo "reale": stage fuori dal vault, vault assoluto fissato anche dal marker dell'host. Cartelle temporanee, nessun vault personale.
 const nuovoReale = (marker = true) => {
-  const base = fs.realpathSync(os.tmpdir()), vault = path.join(base, 'vault-' + crypto.randomBytes(6).toString('hex'));
+  const base = fs.realpathSync.native(os.tmpdir()), vault = path.join(base, 'vault-' + crypto.randomBytes(6).toString('hex'));
   const stage = path.join(base, 'orbit-smart-inbox-real-' + crypto.randomBytes(16).toString('hex'));
   creati.push(stage, vault);
   for (const d of ['home', 'tmp', 'technical/v']) fs.mkdirSync(path.join(stage, d), { recursive: true });
